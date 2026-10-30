@@ -53,7 +53,7 @@ Radarr runs as uid 1000 (`abc`). The image's init re-owns `/config` to that uid 
 The `reconcile` oneshot runs in the package's JavaScript context once `primary` is ready, on every start, against Radarr's API on `127.0.0.1:7878` with the stored API key:
 
 - **Login.** If the stored password no longer logs in, it reads `GET /api/v3/config/host` and `PUT`s it back with Forms authentication, authentication required, username `admin` and the stored password, so a credential changed in Radarr's settings is reverted at the next start.
-- **qBittorrent download client.** While qBittorrent is connected, it creates or updates a QBittorrent download client named `qBittorrent (StartOS)` (the name is unique, so it cannot collide with a client you named `qBittorrent`) at qBittorrent's bridge address, authenticating with qBittorrent's Web API key and no username or password, and records its id in `store.json` as `qbittorrentClientId`. Disconnected, it deletes that one client. Clients you add yourself are never touched. A new client is created disabled and then enabled with `forceSave`, because Radarr tests an enabled client on create even with `forceSave`.
+- **qBittorrent download client.** While qBittorrent is connected, it creates or updates a QBittorrent download client named `qBittorrent (StartOS)` (the name is unique, so it cannot collide with a client you named `qBittorrent`) at qBittorrent's bridge address, authenticating with qBittorrent's Web API key and no username or password, and records its id in `store.json` as `qbittorrentClientId`. It finds that client by the recorded id, or by its name when no id was recorded, so a start interrupted after the create never leaves a second client behind. Disconnected, it deletes that one client. Clients you add yourself are never touched, unless you name one `qBittorrent (StartOS)` in any letter case. A new client is created disabled and then enabled with `forceSave`, because Radarr tests an enabled client on create even with `forceSave`.
 
 ## Volume and Data Layout
 
@@ -112,15 +112,15 @@ Everything else in `config.xml`, and every setting in the UI, is yours. Regenera
 
 Three, all optional.
 
-| Dependency     | Kind      | Version range                         | Declared while            |
-| -------------- | --------- | ------------------------------------- | ------------------------- |
-| `filebrowser`  | `exists`  | `>=2.63.18:3 \|\| >=#quantum:1.5.2:0` | Selected in Media Storage |
-| `nextexplorer` | `exists`  | `>=2.2.7:0`                           | Selected in Media Storage |
-| `qbittorrent`  | `running` | `>=5.3.0:1`, health check `primary`   | qBittorrent is connected  |
+| Dependency     | Kind                              | Declared while            |
+| -------------- | --------------------------------- | ------------------------- |
+| `filebrowser`  | `exists`                          | Selected in Media Storage |
+| `nextexplorer` | `exists`                          | Selected in Media Storage |
+| `qbittorrent`  | `running`, health check `primary` | qBittorrent is connected  |
 
-Radarr reads and writes a file manager's `data` volume whether or not that service is running, so it only has to be installed. Both serve their volume as uid 1000, the uid Radarr runs as, so imported movies are immediately manageable there.
+Radarr reads and writes a file manager's `data` volume whether or not that service is running, so it only has to be installed. While a selected file manager is uninstalled, Radarr mounts nothing of it and starts anyway: its root folders show as missing, the disk scan skips them, and imports into them are refused. Installing it again restarts Radarr, which mounts it. Both serve their volume as uid 1000, the uid Radarr runs as, so imported movies are immediately manageable there.
 
-qBittorrent's bridge address is resolved with `getBridgeAddress` from qBittorrent's `ui-multi` host and its internal port, imported from `qbittorrent-startos`; a change to it restarts Radarr, which re-points the download client. The key is read from `/mnt/qbittorrent/api-key` and watched the same way, so when qBittorrent's key changes Radarr restarts and `reconcile` updates the client: the connection follows qBittorrent automatically.
+qBittorrent's bridge address is resolved with `getBridgeAddress` from qBittorrent's `ui-multi` host and its internal port, imported from `qbittorrent-startos`; a change to it restarts Radarr, which re-points the download client. The key is read from `/mnt/qbittorrent/api-key` and watched the same way, so when qBittorrent's key changes Radarr restarts and `reconcile` updates the client: the connection follows qBittorrent automatically. While qBittorrent is uninstalled its address resolves to nothing, so Radarr mounts nothing of it, starts normally and leaves the client as it is; installing qBittorrent again restarts Radarr, which reconnects it.
 
 ## Network Access and Interfaces
 
@@ -160,7 +160,7 @@ Three actions, all available whether or not Radarr is running. Each writes `stor
 ### Connect qBittorrent / Disconnect qBittorrent
 
 - **When:** once, to connect; again to disconnect. Nothing to redo when qBittorrent's password or key changes.
-- **What it changes:** toggles `qbittorrentConnected` in `store.json`, which declares the dependency, mounts qBittorrent's `share/`, and has `reconcile` create or delete the managed client. StartOS asks for confirmation before disconnecting.
+- **What it changes:** toggles `qbittorrentConnected` in `store.json`, which declares the dependency, mounts qBittorrent's `share/` while qBittorrent is installed, and has `reconcile` create or delete the managed client. StartOS asks for confirmation before disconnecting.
 - **Cost:** a restart.
 - **Repeat safety:** safe; connecting again reuses the one package-managed client.
 
@@ -181,7 +181,7 @@ Three actions, all available whether or not Radarr is running. Each writes `stor
 
 ## Backups and Restore
 
-Both volumes, excluding `MediaCover/` (poster and fanart cache, re-downloaded) and `logs/`. Radarr is stopped during the backup, so `radarr.db` is copied quiescent.
+Both volumes, excluding `MediaCover/` (poster and fanart cache, re-downloaded), `logs/`, `logs.db`, and `Backups/` (Radarr's own scheduled database copies, which the StartOS backup already covers). Radarr is stopped during the backup, so `radarr.db` is copied quiescent.
 
 The movie files themselves live in FileBrowser Quantum or NextExplorer and are backed up with that service, not this one. A restore brings back the library database, settings, download clients, the API key and both passwords; restore the file manager too, or Radarr's root folders point at movies that are not there.
 
