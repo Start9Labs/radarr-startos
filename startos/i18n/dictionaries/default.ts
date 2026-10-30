@@ -23,7 +23,7 @@ const dict = {
 
   // actions/mediaStorage.ts
   'Media Storage': 14,
-  '- FileBrowser Quantum: mounted at /mnt/filebrowser\n- NextExplorer: mounted at /mnt/nextexplorer, one folder per drive, such as /mnt/nextexplorer/Files': 15,
+  '- FileBrowser Quantum: mounted at /mnt/filebrowser\n- NextExplorer: mounted at /mnt/nextexplorer, one folder per location, such as /mnt/nextexplorer/Files': 15,
   'FileBrowser Quantum': 16,
   NextExplorer: 17,
   'Choose which file managers Radarr can read and write movies in. Each one is mounted read-write, and changing the selection restarts Radarr.': 18,
