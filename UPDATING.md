@@ -5,7 +5,7 @@
 Upstream is the LinuxServer image `lscr.io/linuxserver/radarr`, pinned in `startos/manifest/index.ts`:
 
 ```typescript
-source: { dockerTag: 'lscr.io/linuxserver/radarr:6.4.4.10685-ls324' },
+source: { dockerTag: 'lscr.io/linuxserver/radarr:6.4.4.10685-ls325' },
 ```
 
 LinuxServer tags its stable builds `<radarr version>-ls<build>`; its GitHub release marked Latest is the stable one (`nightly-*` and `develop-*` are not):

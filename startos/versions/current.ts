@@ -1,18 +1,18 @@
 import { IMPOSSIBLE, VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '6.4.4.10685:1',
+  version: '6.4.4.10685:2',
   releaseNotes: {
     en_US:
-      "Radarr starts while qBittorrent or a selected file manager is uninstalled, reconnects when it is reinstalled, and finishes connecting qBittorrent after an interrupted setup. Backups leave out Radarr's log database and its own scheduled backups.",
+      'Updated the LinuxServer image to 6.4.4.10685-ls325, refreshing curl and libcurl to 8.23.0. Radarr remains at 6.4.4.10685. Full changes: https://github.com/linuxserver/docker-radarr/compare/6.4.4.10685-ls324...6.4.4.10685-ls325',
     es_ES:
-      'Radarr arranca aunque qBittorrent o un gestor de archivos seleccionado esté desinstalado, se vuelve a conectar cuando se reinstala y termina de conectar qBittorrent tras una configuración interrumpida. Las copias de seguridad omiten la base de datos de registros de Radarr y sus propias copias programadas.',
+      'Imagen de LinuxServer actualizada a 6.4.4.10685-ls325, con curl y libcurl 8.23.0. Radarr sigue en 6.4.4.10685. Todos los cambios: https://github.com/linuxserver/docker-radarr/compare/6.4.4.10685-ls324...6.4.4.10685-ls325',
     de_DE:
-      'Radarr startet auch, wenn qBittorrent oder ein ausgewählter Dateimanager deinstalliert ist, verbindet sich nach einer Neuinstallation wieder und schließt die Verbindung zu qBittorrent nach einer unterbrochenen Einrichtung ab. Backups lassen Radarrs Protokolldatenbank und seine eigenen geplanten Sicherungen aus.',
+      'LinuxServer-Image auf 6.4.4.10685-ls325 aktualisiert, mit curl und libcurl 8.23.0. Radarr bleibt bei 6.4.4.10685. Alle Änderungen: https://github.com/linuxserver/docker-radarr/compare/6.4.4.10685-ls324...6.4.4.10685-ls325',
     pl_PL:
-      'Radarr uruchamia się, gdy qBittorrent lub wybrany menedżer plików jest odinstalowany, łączy się ponownie po ich ponownej instalacji i kończy łączenie z qBittorrent po przerwanej konfiguracji. Kopie zapasowe pomijają bazę dziennika Radarr i jego własne zaplanowane kopie.',
+      'Zaktualizowano obraz LinuxServer do 6.4.4.10685-ls325, z curl i libcurl 8.23.0. Radarr pozostaje w wersji 6.4.4.10685. Wszystkie zmiany: https://github.com/linuxserver/docker-radarr/compare/6.4.4.10685-ls324...6.4.4.10685-ls325',
     fr_FR:
-      'Radarr démarre même si qBittorrent ou un gestionnaire de fichiers sélectionné est désinstallé, se reconnecte quand il est réinstallé et termine la connexion à qBittorrent après une configuration interrompue. Les sauvegardes omettent la base de journaux de Radarr et ses propres sauvegardes planifiées.',
+      'Image LinuxServer mise à jour vers 6.4.4.10685-ls325, avec curl et libcurl 8.23.0. Radarr reste en version 6.4.4.10685. Tous les changements : https://github.com/linuxserver/docker-radarr/compare/6.4.4.10685-ls324...6.4.4.10685-ls325',
   },
   migrations: {
     up: async ({ effects }) => {},
