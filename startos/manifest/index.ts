@@ -13,7 +13,7 @@ export const manifest = setupManifest({
   volumes: ['startos', 'main'],
   images: {
     radarr: {
-      source: { dockerTag: 'lscr.io/linuxserver/radarr:6.4.4.10685-ls325' },
+      source: { dockerTag: 'lscr.io/linuxserver/radarr:6.4.4.10685-ls326' },
       arch: ['x86_64', 'aarch64'],
     },
   },
