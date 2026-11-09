@@ -1,18 +1,18 @@
 import { IMPOSSIBLE, VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '6.4.4.10685:4',
+  version: '6.4.4.10685:5',
   releaseNotes: {
     en_US:
-      'Container maintenance update to LinuxServer build ls326; Radarr remains at 6.4.4.10685. [Full changes](https://github.com/linuxserver/docker-radarr/compare/6.4.4.10685-ls325...6.4.4.10685-ls326).',
+      'Radarr now requires FileBrowser Quantum; the original File Browser is no longer supported.',
     es_ES:
-      'Actualización de mantenimiento del contenedor a la compilación ls326 de LinuxServer; Radarr sigue en 6.4.4.10685. [Todos los cambios](https://github.com/linuxserver/docker-radarr/compare/6.4.4.10685-ls325...6.4.4.10685-ls326).',
+      'Radarr ahora requiere FileBrowser Quantum; el File Browser original ya no es compatible.',
     de_DE:
-      'Wartungsupdate des Containers auf LinuxServer-Build ls326; Radarr bleibt bei 6.4.4.10685. [Alle Änderungen](https://github.com/linuxserver/docker-radarr/compare/6.4.4.10685-ls325...6.4.4.10685-ls326).',
+      'Radarr erfordert jetzt FileBrowser Quantum; der ursprüngliche File Browser wird nicht mehr unterstützt.',
     pl_PL:
-      'Aktualizacja konserwacyjna kontenera do kompilacji LinuxServer ls326; Radarr pozostaje w wersji 6.4.4.10685. [Wszystkie zmiany](https://github.com/linuxserver/docker-radarr/compare/6.4.4.10685-ls325...6.4.4.10685-ls326).',
+      'Radarr wymaga teraz FileBrowser Quantum; oryginalny File Browser nie jest już obsługiwany.',
     fr_FR:
-      'Mise à jour de maintenance du conteneur vers la compilation LinuxServer ls326 ; Radarr reste en version 6.4.4.10685. [Tous les changements](https://github.com/linuxserver/docker-radarr/compare/6.4.4.10685-ls325...6.4.4.10685-ls326).',
+      "Radarr nécessite désormais FileBrowser Quantum ; le File Browser d'origine n'est plus pris en charge.",
   },
   migrations: {
     up: async ({ effects }) => {},
