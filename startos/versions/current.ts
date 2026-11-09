@@ -4,15 +4,15 @@ export const current = VersionInfo.of({
   version: '6.4.4.10685:5',
   releaseNotes: {
     en_US:
-      'Radarr now requires FileBrowser Quantum; the original File Browser is no longer supported.',
+      'FileBrowser integration now requires FileBrowser Quantum 2.0.2-stable:3 or later; the original File Browser is no longer supported.',
     es_ES:
-      'Radarr ahora requiere FileBrowser Quantum; el File Browser original ya no es compatible.',
+      'La integración con FileBrowser ahora requiere FileBrowser Quantum 2.0.2-stable:3 o posterior; el File Browser original ya no es compatible.',
     de_DE:
-      'Radarr erfordert jetzt FileBrowser Quantum; der ursprüngliche File Browser wird nicht mehr unterstützt.',
+      'Die FileBrowser-Integration erfordert jetzt FileBrowser Quantum 2.0.2-stable:3 oder neuer; der ursprüngliche File Browser wird nicht mehr unterstützt.',
     pl_PL:
-      'Radarr wymaga teraz FileBrowser Quantum; oryginalny File Browser nie jest już obsługiwany.',
+      'Integracja z FileBrowser wymaga teraz FileBrowser Quantum 2.0.2-stable:3 lub nowszego; oryginalny File Browser nie jest już obsługiwany.',
     fr_FR:
-      "Radarr nécessite désormais FileBrowser Quantum ; le File Browser d'origine n'est plus pris en charge.",
+      "L'intégration FileBrowser nécessite désormais FileBrowser Quantum 2.0.2-stable:3 ou une version ultérieure ; le File Browser d'origine n'est plus pris en charge.",
   },
   migrations: {
     up: async ({ effects }) => {},
