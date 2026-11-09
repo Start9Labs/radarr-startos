@@ -1,18 +1,18 @@
 import { IMPOSSIBLE, VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '6.4.4.10685:4',
+  version: '6.4.4.10685:5',
   releaseNotes: {
     en_US:
-      'Container maintenance update to LinuxServer build ls326; Radarr remains at 6.4.4.10685. [Full changes](https://github.com/linuxserver/docker-radarr/compare/6.4.4.10685-ls325...6.4.4.10685-ls326).',
+      'FileBrowser integration now requires FileBrowser Quantum 2.0.2-stable:3 or later; the original File Browser is no longer supported. If you use the original File Browser, switch it in the Marketplace: open File Browser, then under Alternative Implementations choose FileBrowser Quantum and select Switch. Your files and accounts carry over, but back up File Browser first; afterwards, re-apply per-user folder restrictions and access rules, and recreate share links.',
     es_ES:
-      'Actualización de mantenimiento del contenedor a la compilación ls326 de LinuxServer; Radarr sigue en 6.4.4.10685. [Todos los cambios](https://github.com/linuxserver/docker-radarr/compare/6.4.4.10685-ls325...6.4.4.10685-ls326).',
+      'La integración con FileBrowser ahora requiere FileBrowser Quantum 2.0.2-stable:3 o posterior; el File Browser original ya no es compatible. Si usa el File Browser original, cámbielo en el Mercado: abra File Browser, luego en Implementaciones alternativas elija FileBrowser Quantum y seleccione Cambiar. Sus archivos y cuentas se conservan, pero haga antes una copia de seguridad de File Browser; después, vuelva a aplicar las restricciones de carpeta por usuario y las reglas de acceso, y cree de nuevo los enlaces compartidos.',
     de_DE:
-      'Wartungsupdate des Containers auf LinuxServer-Build ls326; Radarr bleibt bei 6.4.4.10685. [Alle Änderungen](https://github.com/linuxserver/docker-radarr/compare/6.4.4.10685-ls325...6.4.4.10685-ls326).',
+      'Die FileBrowser-Integration erfordert jetzt FileBrowser Quantum 2.0.2-stable:3 oder neuer; der ursprüngliche File Browser wird nicht mehr unterstützt. Wenn Sie den ursprünglichen File Browser verwenden, wechseln Sie im Marktplatz: Öffnen Sie File Browser, wählen Sie unter Alternative Implementierungen FileBrowser Quantum und dann Wechseln. Ihre Dateien und Konten bleiben erhalten, aber sichern Sie File Browser vorher; richten Sie danach benutzerbezogene Ordnerbeschränkungen und Zugriffsregeln erneut ein und erstellen Sie Freigabelinks neu.',
     pl_PL:
-      'Aktualizacja konserwacyjna kontenera do kompilacji LinuxServer ls326; Radarr pozostaje w wersji 6.4.4.10685. [Wszystkie zmiany](https://github.com/linuxserver/docker-radarr/compare/6.4.4.10685-ls325...6.4.4.10685-ls326).',
+      'Integracja z FileBrowser wymaga teraz FileBrowser Quantum 2.0.2-stable:3 lub nowszego; oryginalny File Browser nie jest już obsługiwany. Jeśli używasz oryginalnego File Browser, przełącz go w Sklepie: otwórz File Browser, następnie w sekcji Alternatywne implementacje wybierz FileBrowser Quantum i kliknij Przełącz. Twoje pliki i konta zostaną zachowane, ale najpierw wykonaj kopię zapasową File Browser; potem ponownie ustaw ograniczenia folderów przypisane do użytkowników i reguły dostępu oraz utwórz nowe linki udostępniania.',
     fr_FR:
-      'Mise à jour de maintenance du conteneur vers la compilation LinuxServer ls326 ; Radarr reste en version 6.4.4.10685. [Tous les changements](https://github.com/linuxserver/docker-radarr/compare/6.4.4.10685-ls325...6.4.4.10685-ls326).',
+      "L'intégration FileBrowser nécessite désormais FileBrowser Quantum 2.0.2-stable:3 ou une version ultérieure ; le File Browser d'origine n'est plus pris en charge. Si vous utilisez le File Browser d'origine, changez-le dans la Bibliothèque de services : ouvrez File Browser, puis sous Implémentations alternatives choisissez FileBrowser Quantum et sélectionnez Changer. Vos fichiers et comptes sont conservés, mais sauvegardez d'abord File Browser ; ensuite, réappliquez les restrictions de dossier par utilisateur et les règles d'accès, puis recréez les liens de partage.",
   },
   migrations: {
     up: async ({ effects }) => {},
