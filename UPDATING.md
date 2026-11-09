@@ -8,10 +8,12 @@ Upstream is the LinuxServer image `lscr.io/linuxserver/radarr`, pinned in `start
 source: { dockerTag: 'lscr.io/linuxserver/radarr:<radarr version>-ls<build>' },
 ```
 
-LinuxServer tags its stable builds `<radarr version>-ls<build>`; its GitHub release marked Latest is the stable one (`nightly-*` and `develop-*` are not):
+LinuxServer tags its stable builds `<radarr version>-ls<build>` (`nightly-*` and `develop-*` are not stable). Published images can precede GitHub releases; find the newest stable build among recently published registry tags instead of relying on GitHub's Latest badge:
 
 ```bash
-gh release view -R linuxserver/docker-radarr --json tagName -q .tagName
+curl -fsSL 'https://hub.docker.com/v2/repositories/linuxserver/radarr/tags?page_size=100&ordering=last_updated' \
+  | jq -r '.results[].name | select(test("^[0-9]+(\\.[0-9]+)*-ls[0-9]+$"))' \
+  | sort -V | tail -n 1
 ```
 
 Confirm the tag ships both architectures before pinning it:

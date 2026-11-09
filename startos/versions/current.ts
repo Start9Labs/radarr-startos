@@ -1,18 +1,18 @@
 import { IMPOSSIBLE, VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '6.4.4.10685:3',
+  version: '6.4.4.10685:4',
   releaseNotes: {
     en_US:
-      'Requires StartOS 0.4.1 or later. Fixes memory use growing while the service runs.',
+      'Container maintenance update to LinuxServer build ls326; Radarr remains at 6.4.4.10685. [Full changes](https://github.com/linuxserver/docker-radarr/compare/6.4.4.10685-ls325...6.4.4.10685-ls326).',
     es_ES:
-      'Requiere StartOS 0.4.1 o posterior. Corrige el aumento del uso de memoria mientras el servicio está en ejecución.',
+      'Actualización de mantenimiento del contenedor a la compilación ls326 de LinuxServer; Radarr sigue en 6.4.4.10685. [Todos los cambios](https://github.com/linuxserver/docker-radarr/compare/6.4.4.10685-ls325...6.4.4.10685-ls326).',
     de_DE:
-      'Erfordert StartOS 0.4.1 oder neuer. Behebt einen während der Laufzeit des Dienstes ansteigenden Speicherverbrauch.',
+      'Wartungsupdate des Containers auf LinuxServer-Build ls326; Radarr bleibt bei 6.4.4.10685. [Alle Änderungen](https://github.com/linuxserver/docker-radarr/compare/6.4.4.10685-ls325...6.4.4.10685-ls326).',
     pl_PL:
-      'Wymaga StartOS 0.4.1 lub nowszego. Naprawia wzrost zużycia pamięci podczas działania usługi.',
+      'Aktualizacja konserwacyjna kontenera do kompilacji LinuxServer ls326; Radarr pozostaje w wersji 6.4.4.10685. [Wszystkie zmiany](https://github.com/linuxserver/docker-radarr/compare/6.4.4.10685-ls325...6.4.4.10685-ls326).',
     fr_FR:
-      "Nécessite StartOS 0.4.1 ou une version ultérieure. Corrige l'augmentation de la consommation de mémoire pendant le fonctionnement du service.",
+      'Mise à jour de maintenance du conteneur vers la compilation LinuxServer ls326 ; Radarr reste en version 6.4.4.10685. [Tous les changements](https://github.com/linuxserver/docker-radarr/compare/6.4.4.10685-ls325...6.4.4.10685-ls326).',
   },
   migrations: {
     up: async ({ effects }) => {},
