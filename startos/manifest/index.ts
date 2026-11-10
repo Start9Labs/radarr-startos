@@ -10,7 +10,7 @@ export const manifest = setupManifest({
   marketingUrl: 'https://radarr.video/',
   donationUrl: 'https://radarr.video/donate',
   description: { short, long },
-  volumes: ['startos', 'main'],
+  volumes: ['startos', 'main', 'public'],
   images: {
     radarr: {
       source: { dockerTag: 'lscr.io/linuxserver/radarr:6.4.4.10685-ls326' },
