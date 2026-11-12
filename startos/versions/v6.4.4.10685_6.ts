@@ -1,0 +1,27 @@
+import { rm } from 'fs/promises'
+import { IMPOSSIBLE, VersionInfo } from '@start9labs/start-sdk'
+import { sdk } from '../sdk'
+
+export const v_6_4_4_10685_6 = VersionInfo.of({
+  version: '6.4.4.10685:6',
+  releaseNotes: {
+    en_US: 'Connecting qBittorrent now requires qBittorrent 5.3.0:5 or later.',
+    es_ES:
+      'Conectar qBittorrent ahora requiere qBittorrent 5.3.0:5 o posterior.',
+    de_DE:
+      'Die Verbindung mit qBittorrent erfordert jetzt qBittorrent 5.3.0:5 oder neuer.',
+    pl_PL:
+      'Połączenie z qBittorrent wymaga teraz qBittorrent 5.3.0:5 lub nowszego.',
+    fr_FR:
+      'La connexion à qBittorrent nécessite désormais qBittorrent 5.3.0:5 ou une version ultérieure.',
+  },
+  migrations: {
+    up: async () => {
+      await rm(sdk.volumes.startos.subpath('share'), {
+        recursive: true,
+        force: true,
+      })
+    },
+    down: IMPOSSIBLE,
+  },
+})
