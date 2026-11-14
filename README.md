@@ -176,9 +176,9 @@ Four actions, all available whether or not Radarr is running. Each writes `store
 ### Connect NZBGet / Disconnect NZBGet
 
 - **When:** once to connect, again to disconnect. Select NZBGet's file manager in Media Storage for imports; no reconnection is needed after its admin password changes.
-- **What it changes:** toggles `nzbgetConnected`, declares the dependency and read-only public mount, and creates or deletes the reserved `NZBGet (StartOS)` record. StartOS asks for confirmation before disconnecting.
+- **What it changes:** toggles `nzbgetConnected`, declares the dependency and read-only public mount, and creates, updates or deletes the reserved `NZBGet (StartOS)` record. The package reapplies its name, enabled state, host, port, SSL flag, username and password using NZBGet's restricted login, not its admin password. Creation seeds the `radarr` category defined by NZBGet; later category changes remain user-owned.
 - **Cost:** a restart.
-- **Repeat safety:** reconciliation reuses the stored id or reserved case-insensitive name. Repeating the action reverses selection, leaving qBittorrent and manually named clients untouched.
+- **Repeat safety:** reconciliation reuses the stored id or reserved case-insensitive name. Repeating the action reverses selection, leaving qBittorrent and manually added clients with other names untouched.
 
 ## Tasks
 
@@ -199,14 +199,14 @@ Four actions, all available whether or not Radarr is running. Each writes `store
 
 The `startos` and `main` volumes, excluding `MediaCover/` (poster and fanart cache, re-downloaded), `logs/`, `logs.db`, and `Backups/` (Radarr's own scheduled database copies, which the StartOS backup already covers). Radarr is stopped during the backup, so `radarr.db` is copied quiescent. The `public` volume is not backed up; init rewrites `api-key` from `store.json`.
 
-The movie files themselves live in FileBrowser Quantum or NextExplorer and are backed up with that service, not this one. A restore brings back the library database, settings, download clients, the API key and both passwords; restore the file manager too, or Radarr's root folders point at movies that are not there.
+The movie files themselves live in FileBrowser Quantum or NextExplorer and are backed up with that service, not this one. A restore brings back the library database, settings, download clients, the API key and both passwords; restore the file manager too, or Radarr's root folders point at movies that are not there. The next start reconciles each managed download client with its downloader's live address and credentials.
 
 ## Limitations and Differences
 
 1. **Authentication cannot be turned off.** The package always applies Forms login with user `admin` on start; a different username or method set in the UI is reverted.
 2. **The API key is fixed by the package.** Regenerating it in the UI lasts only until the next start.
 3. **No local media storage.** Movies go to FileBrowser Quantum or NextExplorer; Radarr's own volume holds only its configuration.
-4. **The `qBittorrent (StartOS)` and `NZBGet (StartOS)` clients' name, host, port, SSL, username and password, and qBittorrent's API key, are reset on every start.** Other settings, including categories, remain user-owned.
+4. **The `qBittorrent (StartOS)` and `NZBGet (StartOS)` clients' name, enabled state, host, port, SSL, username and password, and qBittorrent's API key, are reset on every start.** Other settings, including categories, remain user-owned.
 
 ---
 
