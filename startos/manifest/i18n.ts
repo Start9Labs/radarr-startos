@@ -29,39 +29,39 @@ export const long = {
 
 export const filebrowserDescription = {
   en_US:
-    'Optional. Lets Radarr keep your movie library in FileBrowser Quantum, alongside qBittorrent downloads saved there.',
+    'Optional. Lets Radarr keep your movie library in FileBrowser Quantum, alongside downloads saved there.',
   es_ES:
-    'Opcional. Permite que Radarr guarde tu biblioteca de películas en FileBrowser Quantum, junto a las descargas de qBittorrent guardadas allí.',
+    'Opcional. Permite que Radarr guarde tu biblioteca de películas en FileBrowser Quantum, junto a las descargas guardadas allí.',
   de_DE:
-    'Optional. Ermöglicht Radarr, Ihre Filmbibliothek in FileBrowser Quantum abzulegen, neben den dort gespeicherten qBittorrent-Downloads.',
+    'Optional. Ermöglicht Radarr, Ihre Filmbibliothek in FileBrowser Quantum abzulegen, neben den dort gespeicherten Downloads.',
   pl_PL:
-    'Opcjonalne. Pozwala Radarr przechowywać bibliotekę filmów w FileBrowser Quantum, obok zapisanych tam pobrań qBittorrent.',
+    'Opcjonalne. Pozwala Radarr przechowywać bibliotekę filmów w FileBrowser Quantum, obok zapisanych tam pobrań.',
   fr_FR:
-    'Optionnel. Permet à Radarr de conserver votre médiathèque de films dans FileBrowser Quantum, à côté des téléchargements qBittorrent qui y sont enregistrés.',
+    'Optionnel. Permet à Radarr de conserver votre médiathèque de films dans FileBrowser Quantum, à côté des téléchargements qui y sont enregistrés.',
 }
 
 export const nextexplorerDescription = {
   en_US:
-    'Optional. Lets Radarr keep your movie library in NextExplorer, alongside qBittorrent downloads saved there.',
+    'Optional. Lets Radarr keep your movie library in NextExplorer, alongside downloads saved there.',
   es_ES:
-    'Opcional. Permite que Radarr guarde tu biblioteca de películas en NextExplorer, junto a las descargas de qBittorrent guardadas allí.',
+    'Opcional. Permite que Radarr guarde tu biblioteca de películas en NextExplorer, junto a las descargas guardadas allí.',
   de_DE:
-    'Optional. Ermöglicht Radarr, Ihre Filmbibliothek in NextExplorer abzulegen, neben den dort gespeicherten qBittorrent-Downloads.',
+    'Optional. Ermöglicht Radarr, Ihre Filmbibliothek in NextExplorer abzulegen, neben den dort gespeicherten Downloads.',
   pl_PL:
-    'Opcjonalne. Pozwala Radarr przechowywać bibliotekę filmów w NextExplorer, obok zapisanych tam pobrań qBittorrent.',
+    'Opcjonalne. Pozwala Radarr przechowywać bibliotekę filmów w NextExplorer, obok zapisanych tam pobrań.',
   fr_FR:
-    'Optionnel. Permet à Radarr de conserver votre médiathèque de films dans NextExplorer, à côté des téléchargements qBittorrent qui y sont enregistrés.',
+    'Optionnel. Permet à Radarr de conserver votre médiathèque de films dans NextExplorer, à côté des téléchargements qui y sont enregistrés.',
 }
 
 export const qbittorrentDescription = {
   en_US:
-    'Optional. The download client Radarr sends movies to, connected with the Connect qBittorrent action.',
+    'Optional. A download client Radarr sends movies to, connected with the Connect qBittorrent action.',
   es_ES:
-    'Opcional. El cliente de descargas al que Radarr envía las películas, conectado con la acción Conectar qBittorrent.',
+    'Opcional. Un cliente de descargas al que Radarr envía las películas, conectado con la acción Conectar qBittorrent.',
   de_DE:
-    'Optional. Der Download-Client, an den Radarr Filme sendet, verbunden über die Aktion „qBittorrent verbinden“.',
+    'Optional. Ein Download-Client, an den Radarr Filme sendet, verbunden über die Aktion „qBittorrent verbinden“.',
   pl_PL:
     'Opcjonalne. Klient pobierania, do którego Radarr wysyła filmy, połączony akcją Połącz qBittorrent.',
   fr_FR:
-    'Optionnel. Le client de téléchargement auquel Radarr envoie les films, connecté avec l’action Connecter qBittorrent.',
+    'Optionnel. Un client de téléchargement auquel Radarr envoie les films, connecté avec l’action Connecter qBittorrent.',
 }
