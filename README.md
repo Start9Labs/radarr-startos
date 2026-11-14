@@ -54,22 +54,21 @@ The `reconcile` oneshot runs in the package's JavaScript context once `primary` 
 
 - **Login.** If the stored password no longer logs in, it reads `GET /api/v3/config/host` and `PUT`s it back with Forms authentication, authentication required, username `admin` and the stored password, so a credential changed in Radarr's settings is reverted at the next start.
 - **qBittorrent download client.** While qBittorrent is connected, it creates or updates a QBittorrent download client named `qBittorrent (StartOS)` (the name is unique, so it cannot collide with a client you named `qBittorrent`) at qBittorrent's bridge address, authenticating with qBittorrent's Web API key and no username or password, and records its id in `store.json` as `qbittorrentClientId`. It finds that client by the recorded id, or by its name when no id was recorded, so a start interrupted after the create never leaves a second client behind. Disconnected, it deletes that one client. Clients you add yourself are never touched, unless you name one `qBittorrent (StartOS)` in any letter case. A new client is created disabled and then enabled with `forceSave`, because Radarr tests an enabled client on create even with `forceSave`.
-
-- **NZBGet download client.** The shared `reconcileArrDownloadClient` primitive, imported from `nzbget-startos`, independently manages `NZBGet (StartOS)` using its restricted username/password and tracks it as `nzbgetClientId`. Creation seeds category `radarr`; later categories and non-connection settings remain user-owned. Disconnect deletes only the reserved client. Missing credentials or an absent bridge preserve its existing record until the dependency returns.
+- **NZBGet download client.** The shared `reconcileArrDownloadClient` primitive, imported from `nzbget-startos`, independently manages `NZBGet (StartOS)` using NZBGet's restricted username and password, never its admin password, and tracks it as `nzbgetClientId`. Creation seeds category `radarr`, which NZBGet defines out of the box; later categories and non-connection settings remain user-owned. Disconnect deletes only the reserved client. Missing credentials or an absent bridge preserve its existing record until the dependency returns.
 
 ## Volume and Data Layout
 
-Three volumes of its own, plus a read-write mount of each file manager the user selects.
+Three volumes of its own, plus a read-write mount of each file manager the user selects and a read-only mount of each connected and installed download client's `public` volume.
 
-| Volume                 | Mount Point        | Purpose                                                                                               |
-| ---------------------- | ------------------ | ----------------------------------------------------------------------------------------------------- |
-| `main`                 | `/config`          | `config.xml`, `radarr.db`, `logs.db`, `MediaCover/`, `logs/`, and scheduled database copies               |
-| `startos`              | not mounted        | `store.json`                                                                                          |
-| `public`               | not mounted        | `api-key`, for Prowlarr to mount read-only                                                              |
-| `filebrowser` `data`   | `/mnt/filebrowser` | Movie library and downloads, when FileBrowser Quantum is selected                                      |
-| `nextexplorer` `data`  | `/mnt/nextexplorer`| Movie library and downloads, when NextExplorer is selected; one directory per location                  |
-| `qbittorrent` `public` | `/mnt/qbittorrent` | Read-only while connected and installed; qBittorrent's `api-key`                                        |
-| `nzbget` `public`      | `/mnt/nzbget`      | Read-only while connected and installed; NZBGet's restricted username/password in `credentials.json`     |
+| Volume                 | Mount Point         | Purpose                                                                                              |
+| ---------------------- | ------------------- | ---------------------------------------------------------------------------------------------------- |
+| `main`                 | `/config`           | `config.xml`, `radarr.db`, `logs.db`, `MediaCover/`, `logs/`, and scheduled database copies          |
+| `startos`              | not mounted         | `store.json`                                                                                         |
+| `public`               | not mounted         | `api-key`, for Prowlarr to mount read-only                                                           |
+| `filebrowser` `data`   | `/mnt/filebrowser`  | Movie library and downloads, when FileBrowser Quantum is selected                                    |
+| `nextexplorer` `data`  | `/mnt/nextexplorer` | Movie library and downloads, when NextExplorer is selected; one directory per location               |
+| `qbittorrent` `public` | `/mnt/qbittorrent`  | Read-only while connected and installed; qBittorrent's `api-key`                                     |
+| `nzbget` `public`      | `/mnt/nzbget`       | Read-only while connected and installed; NZBGet's restricted username/password in `credentials.json` |
 
 **The mount points are a contract with qBittorrent, NZBGet and Jellyfin.** qBittorrent and NZBGet mount the same volumes at the same paths, so a path either reports for a finished download is the path Radarr sees: no remote path mapping is needed, and a root folder on the same volume as the download lets Radarr hardlink instead of copy. Changing either mount point breaks that.
 
@@ -89,8 +88,8 @@ Three models.
 | `adminPassword`        | Set Admin Password  | Plaintext, because Radarr's API takes the password itself  |
 | `mediaSources`         | Media Storage       | `filebrowser`, `nextexplorer`, or both                     |
 | `qbittorrentConnected` | Connect qBittorrent | Whether qBittorrent is connected                           |
-| `qbittorrentClientId`  | `reconcile`         | Radarr's id for `qBittorrent (StartOS)`                     |
-| `nzbgetConnected`      | Connect NZBGet      | Whether NZBGet is connected                               |
+| `qbittorrentClientId`  | `reconcile`         | Radarr's id for `qBittorrent (StartOS)`                    |
+| `nzbgetConnected`      | Connect NZBGet      | Whether NZBGet is connected                                |
 | `nzbgetClientId`       | `reconcile`         | Radarr's id for `NZBGet (StartOS)`                         |
 
 `config.xml` is Radarr's own file and Radarr rewrites it whenever settings are saved. The package writes only these keys:
@@ -176,9 +175,9 @@ Four actions, all available whether or not Radarr is running. Each writes `store
 ### Connect NZBGet / Disconnect NZBGet
 
 - **When:** once to connect, again to disconnect. Select NZBGet's file manager in Media Storage for imports; no reconnection is needed after its admin password changes.
-- **What it changes:** toggles `nzbgetConnected`, declares the dependency and read-only public mount, and creates, updates or deletes the reserved `NZBGet (StartOS)` record. The package reapplies its name, enabled state, host, port, SSL flag, username and password using NZBGet's restricted login, not its admin password. Creation seeds the `radarr` category defined by NZBGet; later category changes remain user-owned.
+- **What it changes:** toggles `nzbgetConnected` in `store.json`, which declares the dependency, mounts NZBGet's `public` volume while connected and installed, and has `reconcile` create, update or delete the reserved `NZBGet (StartOS)` record. The package reapplies its name, enabled state, host, port, SSL flag, username and password using NZBGet's restricted login, not its admin password. Creation seeds the `radarr` category defined by NZBGet; later category changes remain user-owned.
 - **Cost:** a restart.
-- **Repeat safety:** reconciliation reuses the stored id or reserved case-insensitive name. Repeating the action reverses selection, leaving qBittorrent and manually added clients with other names untouched.
+- **Repeat safety:** not idempotent; each run reverses selection. Reconciliation reuses the stored id or reserved case-insensitive name. Disconnecting leaves qBittorrent and manually added clients with other names untouched.
 
 ## Tasks
 
@@ -199,7 +198,7 @@ Four actions, all available whether or not Radarr is running. Each writes `store
 
 The `startos` and `main` volumes, excluding `MediaCover/` (poster and fanart cache, re-downloaded), `logs/`, `logs.db`, and `Backups/` (Radarr's own scheduled database copies, which the StartOS backup already covers). Radarr is stopped during the backup, so `radarr.db` is copied quiescent. The `public` volume is not backed up; init rewrites `api-key` from `store.json`.
 
-The movie files themselves live in FileBrowser Quantum or NextExplorer and are backed up with that service, not this one. A restore brings back the library database, settings, download clients, the API key and both passwords; restore the file manager too, or Radarr's root folders point at movies that are not there. The next start reconciles each managed download client with its downloader's live address and credentials.
+The movie files themselves live in FileBrowser Quantum or NextExplorer and are backed up with that service, not this one. A restore brings back the library database, settings, download clients, the API key and the admin password; restore the file manager too, or Radarr's root folders point at movies that are not there. The next start reconciles each managed download client with its downloader's live address and credentials.
 
 ## Limitations and Differences
 
