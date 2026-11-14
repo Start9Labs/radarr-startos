@@ -1,11 +1,3 @@
-export const nzbgetDescription = {
-  en_US: 'Optional. Managed Usenet downloads through Connect NZBGet.',
-  es_ES: 'Opcional. Descargas de Usenet gestionadas mediante Conectar NZBGet.',
-  de_DE: 'Optional. Verwaltete Usenet-Downloads über NZBGet verbinden.',
-  pl_PL: 'Opcjonalne. Zarządzane pobrania z Usenetu przez Połącz NZBGet.',
-  fr_FR: 'Facultatif. Téléchargements Usenet gérés via Connecter NZBGet.',
-}
-
 export const short = {
   en_US: 'Movie collection manager',
   es_ES: 'Gestor de colecciones de películas',
@@ -64,4 +56,17 @@ export const qbittorrentDescription = {
     'Opcjonalne. Klient pobierania, do którego Radarr wysyła filmy, połączony akcją Połącz qBittorrent.',
   fr_FR:
     'Optionnel. Un client de téléchargement auquel Radarr envoie les films, connecté avec l’action Connecter qBittorrent.',
+}
+
+export const nzbgetDescription = {
+  en_US:
+    'Optional. Lets Radarr send Usenet downloads to NZBGet. Enabled with Connect NZBGet.',
+  es_ES:
+    'Opcional. Permite que Radarr envíe descargas de Usenet a NZBGet. Se activa con Conectar NZBGet.',
+  de_DE:
+    'Optional. Ermöglicht Radarr, Usenet-Downloads an NZBGet zu senden. Aktivierung über NZBGet verbinden.',
+  pl_PL:
+    'Opcjonalne. Pozwala Radarr wysyłać pobrania z Usenetu do NZBGet. Włączane w Połącz NZBGet.',
+  fr_FR:
+    'Optionnel. Permet à Radarr d’envoyer les téléchargements Usenet à NZBGet. À activer avec Connecter NZBGet.',
 }
