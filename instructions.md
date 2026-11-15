@@ -10,7 +10,7 @@
 ## What you get on StartOS
 
 - The Radarr web interface, behind a login that is set up for you.
-- qBittorrent on this server connected as Radarr's download client, kept up to date for you.
+- Optional managed qBittorrent and NZBGet download clients on this server, with connection details kept up to date for you.
 - Indexers from Prowlarr on this server, once you connect Radarr from Prowlarr.
 - Your movie library kept in FileBrowser Quantum or NextExplorer, where you can browse the files and where Jellyfin can read them.
 - Radarr's settings, history and library database in StartOS backups. The movie files are backed up with FileBrowser Quantum or NextExplorer.
@@ -20,8 +20,8 @@
 1. Install FileBrowser Quantum or NextExplorer, if you have neither.
 2. Run **Set Admin Password** and save the username and password it shows.
 3. Run **Media Storage** and choose FileBrowser Quantum, NextExplorer, or both.
-4. In qBittorrent, run **Set Download Location** and choose the same file manager. Radarr can only import downloads it can see, and moves them fastest when they are on the same file manager as your library.
-5. Run **Connect qBittorrent**.
+4. In qBittorrent or NZBGet, run **Set Download Location** and choose the same file manager. Radarr can only import downloads it can see, and moves them fastest when they are on the same file manager as your library. Configure your news server in NZBGet if using Usenet.
+5. Run **Connect qBittorrent**, **Connect NZBGet**, or both.
 6. If you use Prowlarr, connect Radarr from Prowlarr's **Connect Apps** action. Indexers you add in Prowlarr then appear in Radarr on their own.
 7. Start Radarr, open the Web UI, and sign in.
 8. In your file manager, create a folder for your movies, such as `movies`.
@@ -35,4 +35,5 @@
 - **Reset Admin Password** generates a new password and restarts Radarr. The old password stops working.
 - **Media Storage** changes which file managers Radarr can use, and restarts Radarr.
 - **Connect qBittorrent** / **Disconnect qBittorrent** adds qBittorrent as a download client, or removes Radarr's `qBittorrent (StartOS)` download client. The connection follows qBittorrent automatically; there is nothing to redo when qBittorrent's password changes.
+- **Connect NZBGet** / **Disconnect NZBGet** manages only `NZBGet (StartOS)`, without removing qBittorrent or manually named clients. The initial category is `radarr`; keep it in NZBGet, or select another category consistently in both applications. Authentication follows NZBGet automatically, including after an admin-password reset. Changing the connection restarts Radarr.
 - Radarr's login is managed by StartOS: changing the username or authentication method in Radarr's settings is undone on the next restart. Use **Reset Admin Password** instead.
