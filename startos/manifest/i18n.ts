@@ -70,3 +70,16 @@ export const nzbgetDescription = {
   fr_FR:
     'Optionnel. Permet à Radarr d’envoyer les téléchargements Usenet à NZBGet. À activer avec Connecter NZBGet.',
 }
+
+export const prowlarrDescription = {
+  en_US:
+    'Optional. Syncs the indexers in Prowlarr to Radarr. Enabled with Connect Prowlarr.',
+  es_ES:
+    'Opcional. Sincroniza los indexadores de Prowlarr con Radarr. Se activa con Conectar Prowlarr.',
+  de_DE:
+    'Optional. Synchronisiert die Indexer aus Prowlarr mit Radarr. Aktivierung über Prowlarr verbinden.',
+  pl_PL:
+    'Opcjonalne. Synchronizuje indeksatory z Prowlarr do Radarr. Włączane w Połącz Prowlarr.',
+  fr_FR:
+    'Optionnel. Synchronise les indexeurs de Prowlarr avec Radarr. À activer avec Connecter Prowlarr.',
+}
