@@ -60,16 +60,16 @@ The `reconcile` oneshot runs in the package's JavaScript context once `primary` 
 
 Three volumes of its own, plus a read-write mount of each file manager the user selects and a read-only mount of each connected and installed download client's `public` volume.
 
-| Volume                 | Mount Point         | Purpose                                                                                              |
-| ---------------------- | ------------------- | ---------------------------------------------------------------------------------------------------- |
-| `main`                 | `/config`           | `config.xml`, `radarr.db`, `logs.db`, `MediaCover/`, `logs/`, and scheduled database copies          |
-| `startos`              | not mounted         | `store.json`                                                                                         |
-| `public`               | not mounted         | `api-key`, for dependents to mount read-only                                                         |
-| `filebrowser` `data`   | `/mnt/filebrowser`  | Movie library and downloads, when FileBrowser Quantum is selected                                    |
-| `nextexplorer` `data`  | `/mnt/nextexplorer` | Movie library and downloads, when NextExplorer is selected; one directory per location               |
-| `qbittorrent` `public` | `/mnt/qbittorrent`  | Read-only while connected and installed; qBittorrent's `api-key`                                     |
-| `nzbget` `public`      | `/mnt/nzbget`       | Read-only while connected and installed; NZBGet's restricted username/password in `credentials.json` |
-| `prowlarr` `public`    | `/mnt/prowlarr`     | Read-only while Prowlarr is installed and the connection is on or undecided; Prowlarr's `api-key`    |
+| Volume                 | Mount Point         | Purpose                                                                                                             |
+| ---------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `main`                 | `/config`           | `config.xml`, `radarr.db`, `logs.db`, `MediaCover/`, `logs/`, and scheduled database copies                         |
+| `startos`              | not mounted         | `store.json`                                                                                                        |
+| `public`               | not mounted         | `api-key`, for dependents to mount read-only                                                                        |
+| `filebrowser` `data`   | `/mnt/filebrowser`  | Movie library and downloads, when FileBrowser Quantum is selected                                                   |
+| `nextexplorer` `data`  | `/mnt/nextexplorer` | Movie library and downloads, when NextExplorer is selected; one directory per location                              |
+| `qbittorrent` `public` | `/mnt/qbittorrent`  | Read-only while connected and installed; qBittorrent's `api-key`                                                    |
+| `nzbget` `public`      | `/mnt/nzbget`       | Read-only while connected and installed; NZBGet's restricted username/password in `credentials.json`                |
+| `prowlarr` `public`    | `/mnt/prowlarr`     | Read-only while Prowlarr is installed and the connection is on, undecided, or pending removal; Prowlarr's `api-key` |
 
 **The mount points are a contract with qBittorrent, NZBGet and Jellyfin.** qBittorrent and NZBGet mount the same volumes at the same paths, so a path either reports for a finished download is the path Radarr sees: no remote path mapping is needed, and a root folder on the same volume as the download lets Radarr hardlink instead of copy. Changing either mount point breaks that.
 
@@ -83,17 +83,18 @@ Three models.
 | `config.xml`         | XML    | Yes — `FileHelper.xml`    | Install init, then `setupMain` on every start     |
 | `api-key` (`public`) | text   | Yes — `FileHelper.string` | Every init, from `store.json` `apiKey`            |
 
-| `store.json` key       | Set by                                   | Notes                                                      |
-| ---------------------- | ---------------------------------------- | ---------------------------------------------------------- |
-| `apiKey`               | Install                                  | 32 hex characters; also published as `api-key` on `public` |
-| `adminPassword`        | Set Admin Password                       | Plaintext, because Radarr's API takes the password itself  |
-| `mediaSources`         | Media Storage                            | `filebrowser`, `nextexplorer`, or both                     |
-| `qbittorrentConnected` | Connect qBittorrent                      | Whether qBittorrent is connected                           |
-| `qbittorrentClientId`  | `reconcile`                              | Radarr's id for `qBittorrent (StartOS)`                    |
-| `nzbgetConnected`      | Connect NZBGet                           | Whether NZBGet is connected                                |
-| `nzbgetClientId`       | `reconcile`                              | Radarr's id for `NZBGet (StartOS)`                         |
-| `prowlarrConnected`    | Connect Prowlarr, the `prowlarr` oneshot | Whether Prowlarr syncs to Radarr; `null` until decided     |
-| `prowlarrAppId`        | the `prowlarr` oneshot                   | Prowlarr's id for `Radarr (StartOS)`                       |
+| `store.json` key            | Set by                                   | Notes                                                         |
+| --------------------------- | ---------------------------------------- | ------------------------------------------------------------- |
+| `apiKey`                    | Install                                  | 32 hex characters; also published as `api-key` on `public`    |
+| `adminPassword`             | Set Admin Password                       | Plaintext, because Radarr's API takes the password itself     |
+| `mediaSources`              | Media Storage                            | `filebrowser`, `nextexplorer`, or both                        |
+| `qbittorrentConnected`      | Connect qBittorrent                      | Whether qBittorrent is connected                              |
+| `qbittorrentClientId`       | `reconcile`                              | Radarr's id for `qBittorrent (StartOS)`                       |
+| `nzbgetConnected`           | Connect NZBGet                           | Whether NZBGet is connected                                   |
+| `nzbgetClientId`            | `reconcile`                              | Radarr's id for `NZBGet (StartOS)`                            |
+| `prowlarrConnected`         | Connect Prowlarr, the `prowlarr` oneshot | Whether Prowlarr syncs to Radarr; `null` until decided        |
+| `prowlarrAppId`             | the `prowlarr` oneshot                   | Prowlarr's id for `Radarr (StartOS)`                          |
+| `prowlarrDisconnectPending` | Connect Prowlarr, the `prowlarr` oneshot | An explicit disconnect whose record removal has not completed |
 
 `config.xml` is Radarr's own file and Radarr rewrites it whenever settings are saved. The package writes only these keys:
 
@@ -134,7 +135,7 @@ qBittorrent's bridge address is resolved with `getBridgeAddress` from qBittorren
 
 NZBGet's bridge address is resolved through its exported `uiHostId` and `uiPort` in the same way. Only username and password in `/mnt/nzbget/credentials.json` are watched: a change restarts Radarr and updates the managed client; changes to NZBGet's published download path do not restart Radarr. The credentials are not copied into `store.json`; Radarr retains them in its client settings. While NZBGet is uninstalled, its volume is not mounted and the existing client remains unchanged until it returns.
 
-Prowlarr's bridge address is resolved from its `ui-multi` host and internal port, imported from `prowlarr-startos`, and its API key read from `/mnt/prowlarr/api-key`; a change to either restarts Radarr. The `prowlarr` oneshot then calls `reconcileProwlarrApplication`, imported from `prowlarr-startos`, against Prowlarr's API: connected, it creates or updates the application `Radarr (StartOS)` in Prowlarr with Radarr's own bridge address and API key and sync level **Full Sync**, adopting a record by its stored id, that name, or the name `Radarr` an earlier Prowlarr release created; disconnected, it deletes that record. It does not require `primary`, and retries until Prowlarr answers. While Prowlarr is uninstalled, Radarr mounts nothing of it and starts normally, and a pending removal is dropped since nothing is left to remove. Prowlarr deletes the record itself when Radarr is uninstalled.
+Prowlarr's bridge address is resolved from its `ui-multi` host and internal port, imported from `prowlarr-startos`, and its API key read from `/mnt/prowlarr/api-key`; a change to either restarts Radarr. The `prowlarr` oneshot then calls `reconcileProwlarrApplication`, imported from `prowlarr-startos`, against Prowlarr's API: connected, it creates or updates the application `Radarr (StartOS)` in Prowlarr with Radarr's own bridge address and API key and sync level **Full Sync**, adopting a record by its stored id, that name, or the name `Radarr` an earlier Prowlarr release created; disconnected, it deletes that record. It does not require `primary`, and retries until Prowlarr answers. An explicit disconnect keeps cleanup pending even if an interrupted registration has not saved the application's id; reconciliation then finds the record by its reserved or legacy name. Reconciliation never overwrites a newer connection choice made by an action. While Prowlarr is uninstalled, Radarr mounts nothing of it and starts normally, and a pending removal is dropped since nothing is left to remove. Prowlarr deletes the record itself when Radarr is uninstalled.
 
 `prowlarrConnected` is `null` on an install updated from a release without **Connect Prowlarr**: once Prowlarr answers, the oneshot records `true` and keeps the record if Prowlarr already has one for Radarr, and `false` otherwise. Fresh installs start at `false`.
 
@@ -156,7 +157,7 @@ After that: connect qBittorrent or NZBGet, create a root folder, and add indexer
 
 ## Actions
 
-Four actions, all available whether or not Radarr is running. Each writes `store.json`, and the restart that triggers applies it.
+Five actions, all available whether or not Radarr is running. Each writes `store.json`, and the restart that triggers applies it.
 
 ### Set Admin Password / Reset Admin Password
 
