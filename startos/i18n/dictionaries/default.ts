@@ -41,6 +41,12 @@ const dict = {
   'Connect NZBGet': 26,
   'Manage the NZBGet download client. Changing the connection restarts the service; select the same shared storage for imports.': 27,
   'Removes only the NZBGet (StartOS) download client.': 28,
+
+  // actions/connectProwlarr.ts
+  'Disconnect Prowlarr': 29,
+  'Connect Prowlarr': 30,
+  'Sync the indexers in Prowlarr on this server to Radarr. Changing the connection restarts Radarr.': 31,
+  'Removes the Radarr (StartOS) application from Prowlarr. Indexers it already synced stay in Radarr.': 32,
 } as const
 
 /**

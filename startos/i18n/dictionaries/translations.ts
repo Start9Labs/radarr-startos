@@ -31,6 +31,10 @@ export default {
     26: 'Conectar NZBGet',
     27: 'Gestiona el cliente de descargas NZBGet. Cambiar la conexión reinicia el servicio; seleccione el mismo almacenamiento compartido para importar.',
     28: 'Elimina únicamente el cliente de descargas NZBGet (StartOS).',
+    29: 'Desconectar Prowlarr',
+    30: 'Conectar Prowlarr',
+    31: 'Sincroniza con Radarr los indexadores de Prowlarr en este servidor. Cambiar la conexión reinicia Radarr.',
+    32: 'Elimina la aplicación Radarr (StartOS) de Prowlarr. Los indexadores ya sincronizados permanecen en Radarr.',
   },
   de_DE: {
     0: 'Starte Radarr!',
@@ -62,6 +66,10 @@ export default {
     26: 'NZBGet verbinden',
     27: 'Verwaltet den NZBGet-Download-Client. Eine Verbindungsänderung startet den Dienst neu; für Importe denselben gemeinsamen Speicher wählen.',
     28: 'Entfernt nur den Download-Client NZBGet (StartOS).',
+    29: 'Prowlarr trennen',
+    30: 'Prowlarr verbinden',
+    31: 'Synchronisiert die Indexer aus Prowlarr auf diesem Server mit Radarr. Eine Änderung der Verbindung startet Radarr neu.',
+    32: 'Entfernt die Anwendung Radarr (StartOS) aus Prowlarr. Bereits synchronisierte Indexer bleiben in Radarr.',
   },
   pl_PL: {
     0: 'Uruchamianie Radarr!',
@@ -93,6 +101,10 @@ export default {
     26: 'Połącz NZBGet',
     27: 'Zarządza klientem pobierania NZBGet. Zmiana połączenia uruchamia usługę ponownie; do importu wybierz ten sam współdzielony magazyn.',
     28: 'Usuwa tylko klienta pobierania NZBGet (StartOS).',
+    29: 'Odłącz Prowlarr',
+    30: 'Połącz Prowlarr',
+    31: 'Synchronizuje indeksatory z Prowlarr na tym serwerze do Radarr. Zmiana połączenia uruchamia Radarr ponownie.',
+    32: 'Usuwa aplikację Radarr (StartOS) z Prowlarr. Już zsynchronizowane indeksatory pozostają w Radarr.',
   },
   fr_FR: {
     0: 'Démarrage de Radarr !',
@@ -124,5 +136,9 @@ export default {
     26: 'Connecter NZBGet',
     27: 'Gère le client de téléchargement NZBGet. Modifier la connexion redémarre le service ; sélectionnez le même stockage partagé pour les imports.',
     28: 'Supprime uniquement le client de téléchargement NZBGet (StartOS).',
+    29: 'Déconnecter Prowlarr',
+    30: 'Connecter Prowlarr',
+    31: 'Synchronise avec Radarr les indexeurs de Prowlarr sur ce serveur. Modifier la connexion redémarre Radarr.',
+    32: 'Supprime l’application Radarr (StartOS) de Prowlarr. Les indexeurs déjà synchronisés restent dans Radarr.',
   },
 } satisfies Record<string, LangDict>
